@@ -1,0 +1,78 @@
+﻿@model IEnumerable<SomaliEbayProject.Models.Order>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table table-bordered table-hover table-light bg-info">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Qty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalCost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalPaid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsPaid)
+            </th>
+            <th>
+                Balance
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Discount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Qty)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalCost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalPaid)
+            </td>
+            <td>
+                @if(item.IsPaid)
+                {
+                  <i class="glyphicon glyphicon-check text-success">Paid</i>
+                }
+                else
+                {
+                    <i class="glyphicon glyphicon-remove text-danger">UnPaid</i>
+                }
+            </td>
+            <td>
+                $@(item.TotalCost - (item.Discount + item.TotalPaid))
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Discount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.ProductDescription)
+            </td>
+            <td>
+                <a class="btn btn-sm btn-primary text-white" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a class="btn btn-sm btn-success text-white"asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a class="btn btn-sm btn-danger text-white" asp-action="Delete" asp-route-id="@item.Id" onclick="return confirm 'are you sure you want to delete?'">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

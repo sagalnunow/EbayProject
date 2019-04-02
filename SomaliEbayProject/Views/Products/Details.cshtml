@@ -1,0 +1,80 @@
+﻿@model SomaliEbayProject.Models.Product
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+
+<div>
+    <h4>Product</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+
+            <div class="card mb-3">
+                <h3 class="card-header bg-success">Products Details</h3>
+                <div class="card-body bg-light">
+                    <h5 class="card-title">@Model.ProductName</h5>
+                    <h6 class="card-subtitle text-muted">@Model.ProductDescription</h6>
+                </div>
+                @if (Model.Image != null)
+                {
+                    <image class="img-thumbnail" style="min-height: 300px; max-width: 400px; display: block" scr="data:image;base64, @Convert.ToBase64String(Model.Image)" />
+                }
+                else
+                {
+                    <p class="text-danger">No Image</p>
+                }
+                <div class="card-body">
+                    <p class="card-text">@Model.ProductDescription</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Qty: @Model.Qty</li>
+                    <li class="list-group-item">Price: @Model.Price</li>
+                    <li class="list-group-item">Discount: @Model.Discount</li>
+                    <li class="list-group-item">Number Of Orders: @Model.Orders?.Count</li>
+                    <li class="list-group-item">Discount: @Model.Discount</li>
+                </ul>
+                
+            </div>
+          
+        </div>
+
+        <div class="col-md-8">
+            <div class="card border-light mb-3" style="max-width: 20rem;">
+                <div class="card-header">Product Orders</div>
+                <div class="card-body">
+                    <h4 class="card-title">View product Orders</h4>
+                    <p class="card-text">
+                        <table class="table table-bordered table-hover table-dark">
+                            <tr>
+                                <td>Id</td>
+                                <td>Qty</td>
+                                <td>TotalCost</td>
+                                <td>TotalPaid</td>
+                                <td>Discount</td>
+                            </tr>
+                            @foreach (var order in Model.Orders)
+                            {
+                            <tr>
+                                <td>@order.Id</td>
+                                <td>@order.Qty</td>
+                                <td>@order.TotalCost</td>
+                                <td>@order.TotalPaid</td>
+                                <td>@order.Discount</td>
+                            </tr>
+                            }
+                        </table>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+   
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
